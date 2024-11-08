@@ -1,5 +1,7 @@
 FROM bitnami/pytorch
 
+WORKDIR /
+ADD ./.cache ./.cache
 WORKDIR /app
 COPY ./app ./app
 COPY requirements.txt requirements.txt

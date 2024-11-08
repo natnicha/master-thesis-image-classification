@@ -23,6 +23,9 @@ docker-compose-up:
 docker-compose-up-with-limits:
 	docker-compose --compatibility up
 
+docker-compose-up-scale-app:
+	docker-compose up --scale app=2
+
 prometheus-run:
 	docker run -d -p 9090:9090 -v .\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 
@@ -30,13 +33,16 @@ swarm-manager-init:
 	docker swarm init
 
 service-create:
-	docker service create --name ml --replicas=3 master-thesis-image-recognition-app
+	docker service create --name ml --publish 8000:3000 --replicas=3 --limit-cpu 3 master-thesis-image-recognition-app
 
 service-update-port:
-	docker service update --publish-add 8000:3000 machine-learning
+	docker service update --publish-add 8000:3000 ml
 
 service-scale:
 	docker service scale ml=1
+
+service-update-delay:
+	docker service update --update-delay 10s ml
 
 service-list:
 	docker service ls
@@ -45,7 +51,7 @@ create-cadvisor-monitoring:
 	docker service create --name cadvisor -l prometheus-job=cadvisor --mode=global --publish target=8000,mode=host --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock,ro --mount type=bind,src=/,dst=/rootfs,ro --mount type=bind,src=/var/run,dst=/var/run --mount type=bind,src=/sys,dst=/sys,ro --mount type=bind,src=/var/lib/docker,dst=/var/lib/docker,ro google/cadvisor -docker_only 
 	
 
-query-emory-usage:
+query-memory-usage:
 	container_memory_usage_bytes{container_label_com_docker_swarm_service_name="machine-learning"}/(1024*1024)
 
 
