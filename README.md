@@ -1,6 +1,6 @@
 # Welcome to Image Classification
 
-This application is an image classification inference, a target application of our research study as machine learning inference. This implementation is developed in Python using [Flask](https://flask.palletsprojects.com/en/stable/), a lightweight Web Server Gateway Interface (WSGI) web application framework, used to forward requests from a web server to a backend application or framework, and deployed on a Kubernetes cluster hosted by [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Additionally, a [pretrained model](https://pytorch.org/vision/main/models.html) from [PyTorch](https://pytorch.org/) is integrated and deployed as a service. Based on the list of pre-trained models in PyTorch,
+This application is an image classification inference, a target application of our research study as machine learning inference. This implementation is developed in Python using [FastAPI](https://fastapi.tiangolo.com/), a lightweight Web Server Gateway Interface (WSGI) web application framework, used to forward requests from a web server to a backend application or framework, and deployed on a Kubernetes cluster hosted by [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/). Additionally, a [pretrained model](https://pytorch.org/vision/main/models.html) from [PyTorch](https://pytorch.org/) is integrated and deployed as a service. Based on the list of pre-trained models in PyTorch,
 [EfficientNet_B3](https://pytorch.org/vision/stable/models/generated/torchvision.models.efficientnet_b3.html#torchvision.models.EfficientNet_B3_Weights) is selected due to its high accuracy of 96.054% and relatively small file size of 47.2 MB.
 
 ## About Project
@@ -17,7 +17,7 @@ This project consists of the following three components, distributed across diff
 
 ## Built With
 
-[<img src="https://www.python.org/static/img/python-logo.png" height="50">](https://www.python.org/) [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PyTorch_logo_black.svg/2560px-PyTorch_logo_black.svg.png" height="50">](https://pytorch.org/) [<img src="https://flask.palletsprojects.com/en/stable/_images/flask-horizontal.png" height="50">](https://flask.palletsprojects.com/en/stable/)
+[<img src="https://www.python.org/static/img/python-logo.png" height="50">](https://www.python.org/) [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PyTorch_logo_black.svg/2560px-PyTorch_logo_black.svg.png" height="50">](https://pytorch.org/) [<img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" height="50">](https://fastapi.tiangolo.com/)
 
 <img src="https://img.shields.io/badge/Test-Pass-green"> <img src="https://img.shields.io/badge/Secuiry-Pass-blue">
 
@@ -32,7 +32,7 @@ This repository is developed by Python. So, install [Python](https://www.python.
 2. Our repository applies virtual environment development, [Pipenv](https://pipenv.pypa.io/en/latest/). By using this, you can simply install pipenv and create your working environment. Then install all dependencies using `pipenv install` or `pipenv sync`.
 
 ## Routes Information
-Using [Flask](https://flask.palletsprojects.com/en/stable/), these following APIs are implemented.
+Using [FastAPI](https://flask.palletsprojects.com/en/stable/), these following APIs are implemented.
 
 1. **GET /**: This API is a default route for health checks, which simply returns a `hello-world` message.
 2. **POST /classify**: This API serves an image classification service based on user-submitted photos.
@@ -40,14 +40,14 @@ Using [Flask](https://flask.palletsprojects.com/en/stable/), these following API
 ### Starting the service
 To run this service, simply run the service by flask using the following command.
 ```
-flask run -p 30030
+python -m uvicorn main:app 
 ```
 
 ### Testing
-You can simply test if your service is running success fully by opening a browser with the following website [http://localhost:30030/](http://localhost:30030/). If the service is running, you should see `Hello, World!` in the browser.
+You can simply test if your service is running success fully by opening a browser with the following website [http://localhost:8000/](http://localhost:8000/). If the service is running, you should see `Hello, World!` in the browser.
 
 
-For further testing the service, use your prefer choices of API testing platforms, for example, [Postman](https://www.postman.com/). Then, use the above information for routes to make requests, for example, POST [http://localhost:30030/api/v1/ml/classify](http://localhost:30030/api/v1/ml/classify).
+For further testing the service, use your prefer choices of API testing platforms, for example, [Postman](https://www.postman.com/). Then, use the above information for routes to make requests, for example, POST [http://localhost:8000/api/v1/ml/classify](http://localhost:8000/api/v1/ml/classify).
 
 
 ## Utility Commands
